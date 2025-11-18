@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneaTools | Hub de Ferramentas Genealógicas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>GeneaTools | Hub de Inteligência Genealógica</title>
+    <meta name="description" content="Ferramentas avançadas para análise de DNA e busca de caminhos genealógicos.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50; /* Azul escuro sóbrio */
-            --accent: #27ae60;  /* Verde para 'vida/árvore' */
-            --bg: #f8f9fa;
-            --text: #333;
+            --primary: #1e293b;     /* Slate Dark */
+            --secondary: #475569;   /* Slate Light */
+            --arbore-color: #10b981; /* Emerald - DNA */
+            --path-color: #f59e0b;  /* Amber - Discovery */
+            --bg: #f8fafc;
             --card-bg: #ffffff;
         }
 
@@ -19,23 +21,25 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--primary);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            line-height: 1.5;
         }
 
-        /* Header / Hero Section */
+        /* --- Header --- */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, #34495e 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding: 3rem 1rem;
+            padding: 5rem 1rem 6rem; /* Padding extra embaixo para o efeito visual */
             text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
 
         h1 {
             font-weight: 800;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
         }
@@ -43,116 +47,190 @@
         .subtitle {
             font-weight: 300;
             opacity: 0.9;
-            font-size: 1.1rem;
-            max-width: 600px;
+            font-size: 1.25rem;
+            max-width: 700px;
             margin: 0 auto;
+            color: #cbd5e1;
         }
 
-        /* Container Principal */
+        /* --- Main Grid --- */
         main {
             flex: 1;
-            max-width: 1000px;
-            margin: -40px auto 0; /* Sobe os cards para cima do header */
-            padding: 0 20px;
+            max-width: 1200px;
             width: 100%;
+            margin: -80px auto 0; /* Sobe os cards para cima do header */
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+            z-index: 10;
         }
 
-        /* Cards das Ferramentas */
+        /* --- Cards --- */
         .tool-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            border-top: 5px solid transparent;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-
-        /* Cores específicas para as bordas dos cards */
-        .card-arbore { border-top-color: var(--accent); }
-        .card-path { border-top-color: #e67e22; }
 
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
-        .tool-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        /* Barra colorida no topo do card */
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
         }
+        .card-arbore::before { background: var(--arbore-color); }
+        .card-path::before { background: var(--path-color); }
 
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        p {
-            color: #666;
-            line-height: 1.6;
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
+        .icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        .card-arbore .icon-box { background: #ecfdf5; color: var(--arbore-color); }
+        .card-path .icon-box { background: #fffbeb; color: var(--path-color); }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .description {
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            flex-grow: 1; /* Empurra o botão para baixo */
+            font-size: 1rem;
+        }
+
+        /* Tech Tags (Pílulas de tecnologia) */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .tech-tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Botões */
+        .btn {
+            display: block;
+            padding: 1rem;
             text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
             transition: background 0.2s;
         }
+        
+        .btn-arbore { background-color: var(--primary); color: white; }
+        .btn-arbore:hover { background-color: #0f172a; }
+        
+        .btn-path { background-color: var(--primary); color: white; }
+        .btn-path:hover { background-color: #0f172a; }
 
-        .btn:hover {
-            background-color: #1a252f;
-        }
-
-        /* Footer */
+        /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2rem;
-            color: #888;
+            padding: 4rem 2rem 2rem;
+            color: #94a3b8;
             font-size: 0.9rem;
-            margin-top: 3rem;
+            margin-top: auto;
         }
 
+        @media (max-width: 768px) {
+            header { padding: 3rem 1rem 5rem; }
+            h1 { font-size: 2.2rem; }
+            main { margin-top: -60px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <h1>GeneaTools</h1>
-        <p class="subtitle">Um conjunto de ferramentas para análise e visualização de dados genealógicos.</p>
+        <p class="subtitle">Suíte de ferramentas de alta performance para pesquisa genealógica e análise genética.</p>
     </header>
 
     <main>
         <div class="tool-card card-arbore">
-            <div>
-                <div class="tool-icon">🧬</div> <h2>ArboreDna</h2>
-                <p>Visualize e analise conexões de DNA em sua árvore genealógica. Ideal para mapeamento genético e triangulação.</p>
+            <div class="card-header">
+                <div class="icon-box">🧬</div>
+                <h2>ArboreDna</h2>
             </div>
-            <a href="https://arboredna.onrender.com" class="btn" target="_blank">Abrir ArboreDna</a>
+            
+            <p class="description">
+                Plataforma de análise genética que utiliza algoritmos de <strong>teoria de grafos</strong> para processar segmentos de DNA. 
+                Realiza clustering automático de matches, separação de lados (Phasing Paterno/Materno) e triangulação visual de cromossomos.
+            </p>
+
+            <div class="tech-stack">
+                <span class="tech-tag">NetworkX</span>
+                <span class="tech-tag">Louvain Community</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">Phasing</span>
+            </div>
+
+            <a href="https://arboredna.onrender.com" class="btn btn-arbore" target="_blank">Acessar ArboreDna →</a>
         </div>
 
         <div class="tool-card card-path">
-            <div>
-                <div class="tool-icon">🧭</div> <h2>Pathfinder</h2>
-                <p>Descubra caminhos, rotas migratórias e conexões ocultas entre ancestrais através de ferramentas de busca avançada.</p>
+            <div class="card-header">
+                <div class="icon-box">🧭</div>
+                <h2>Pathfinder</h2>
             </div>
-            <a href="https://https://pathfinder-2w8n.onrender.com/" class="btn" target="_blank">Abrir Pathfinder</a>
+            
+            <p class="description">
+                Motor de busca genealógica integrado à API do <strong>FamilySearch</strong>. Utiliza <strong>BFS Bidirecional</strong> (Breadth-First Search) 
+                para descobrir o caminho exato entre duas pessoas, calcular graus de parentesco (primos/removidos) e gerar diagramas de conexão.
+            </p>
+
+            <div class="tech-stack">
+                <span class="tech-tag">FamilySearch API</span>
+                <span class="tech-tag">Bidirectional Search</span>
+                <span class="tech-tag">OAuth2</span>
+                <span class="tech-tag">Mermaid.js</span>
+            </div>
+
+            <a href="https://pathfinder.onrender.com" class="btn btn-path" target="_blank">Acessar Pathfinder →</a>
         </div>
     </main>
 
     <footer>
-        © 2025 GeneaTools. Desenvolvido para pesquisa histórica.
+        © 2025 GeneaTools. Desenvolvido para pesquisadores sérios.
     </footer>
 
 </body>
